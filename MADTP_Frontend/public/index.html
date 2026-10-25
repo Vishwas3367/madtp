@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MADTP | Worker Safety Intelligence</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<section id="loginScreen" class="login-screen">
+  <form id="loginForm" class="login-card">
+    <div class="brand-mark">M</div><p class="eyebrow">WORKER SAFETY INTELLIGENCE</p>
+    <h1>MADTP</h1><p class="muted">Multimodal Adaptive Digital Twin Prediction</p>
+    <label>Username<input id="username" value="operator" required></label>
+    <label>Password<input id="password" type="password" value="demo123" required></label>
+    <button class="btn primary full" type="submit">Sign in to workspace →</button>
+    <p class="login-note">Prototype interface · not a medical diagnostic device</p>
+  </form>
+</section>
+<div id="app" class="app-shell hidden">
+  <aside class="sidebar">
+    <div class="sidebar-brand"><div class="brand-mark small">M</div><div><strong>MADTP</strong><small>SAFETY INTELLIGENCE</small></div></div>
+    <p class="workspace-label">WORKSPACE</p>
+    <nav id="mainNav">
+      <button class="nav-item active" data-page="overview">◫ &nbsp; Overview</button>
+      <button class="nav-item" data-page="monitoring">⌁ &nbsp; Live Monitoring</button>
+      <button class="nav-item" data-page="twin">◎ &nbsp; Digital Twin</button>
+      <button class="nav-item" data-page="predictions">⌁ &nbsp; Predictions &amp; MADTP</button>
+      <button class="nav-item" data-page="simulation">⤢ &nbsp; Simulation Lab</button>
+      <button class="nav-item" data-page="settings">⚙ &nbsp; Settings</button>
+    </nav>
+    <div class="sidebar-bottom">
+      <button id="signOutBtn" class="nav-item">↪ &nbsp; Sign out</button>
+    </div>
+  </aside>
+  <main class="main">
+    <header class="topbar"><div><p class="eyebrow">FIELD OPERATIONS / WORKER 001</p><h2 id="pageTitle">Overview</h2></div><div class="top-actions"><span class="live-pill active">● LIVE DATA</span><button id="searchBtn" class="icon-btn" title="Search">⌕</button><div class="avatar">OP</div></div></header>
+    <div id="searchRow" class="search-row hidden"><input id="globalSearch" placeholder="Search this page…"><button id="closeSearch" class="btn subtle">Close</button></div>
+    <section class="page active" id="page-overview">
+      <div class="welcome-row"><div><h1>Worker safety overview</h1><p class="muted">Physiological signals, environmental exposure, and predictive risk in one place.</p></div><div class="date-chip" id="clock">Local session</div></div>
+      <div class="notice" id="prototypeNotice" style="display:none;"><b>ⓘ</b><div><strong>Prototype dashboard</strong><p>Values shown are demo placeholders until the ESP32 stream and Python MADTP pipeline are connected.</p></div></div>
+      <div class="metric-grid">
+        <article class="metric-card"><div class="metric-top">Heart rate <span class="metric-icon coral">♥</span></div><div class="metric-value"><span id="heartRate">—</span><small>BPM</small></div><p class="metric-foot">Awaiting live data</p></article>
+        <article class="metric-card"><div class="metric-top">Body temperature <span class="metric-icon orange">♨</span></div><div class="metric-value"><span id="bodyTemp">—</span><small>°C</small></div><p class="metric-foot">Prototype sensor value</p></article>
+        <article class="metric-card"><div class="metric-top">SpO₂ <span class="metric-icon blue">◉</span></div><div class="metric-value"><span id="spo2">—</span><small>%</small></div><p class="metric-foot">Signal quality unverified</p></article>
+        <article class="metric-card"><div class="metric-top">Ambient conditions <span class="metric-icon green">☼</span></div><div class="metric-value"><span id="ambientTemp">—</span><small>°C</small></div><p class="metric-foot" id="humidity">Humidity —%</p></article>
+      </div>
+      <div class="content-grid"><article class="panel"><div class="panel-heading"><div><h3>Physiological trends</h3><p class="muted">Recent samples</p></div><span class="panel-tag">LIVE DATA</span></div><div class="chart-wrap"><canvas id="trendChart"></canvas></div></article>
+      <article class="panel"><div class="panel-heading"><div><h3>Current risk assessment</h3><p class="muted">Illustrative score, not a diagnosis</p></div><span class="risk-badge" id="riskBadge">WAITING</span></div><div class="risk-score"><strong id="riskScore">—</strong><span>/ 100</span></div><div class="progress"><span id="riskProgress" style="width:0%"></span></div><p id="recommendation" class="recommendation">Waiting for Python API data...</p><hr><div class="risk-detail"><span>Personal baseline</span><b id="overviewBaseline">Python output pending</b></div><div class="risk-detail"><span>Twin divergence</span><b id="divergence">—</b></div></article></div>
+      <div class="content-grid"><article class="panel"><div class="panel-heading"><div><h3>Digital Twin snapshot</h3><p class="muted">Expected state versus observed state</p></div><button class="text-btn" data-goto="twin">View twin →</button></div><div class="twin-mini"><div class="twin-orb">◎</div><div><b>Worker Twin · 001</b><p class="muted" id="twinSyncText">Waiting for Python API synchronisation</p><span class="tag">Baseline-aware</span> <span class="tag">Multimodal</span></div></div></article>
+      <article class="panel"><h3>System components</h3><div class="component-list"><p>ESP32 sensor stream <span class="state pending">Pending</span></p><p>Python MADTP pipeline <span class="state pending">Pending</span></p><p>Digital Twin engine <span class="state pending">Pending</span></p></div></article></div>
+    </section>
+    <section class="page" id="page-monitoring"><div class="section-intro"><h1>Live Monitoring</h1><p class="muted">Incoming sensor values and signal health.</p></div><div class="notice" id="monitoringNotice" style="display:none;"><b>ⓘ</b><div><strong>Waiting for hardware bridge</strong><p>Connect the ESP32 serial receiver/API to the Python backend to display live values.</p></div></div><article class="panel"><h3>Sensor telemetry</h3><div class="table-scroll"><table><thead><tr><th>Signal</th><th>Latest value</th><th>Source</th><th>Status</th></tr></thead><tbody>
+    <tr><td>Heart rate</td><td id="tableHr">— BPM</td><td>MAX30102</td><td><span class="state pending">Pending</span></td></tr><tr><td>SpO₂</td><td id="tableSpo2">—%</td><td>MAX30102</td><td><span class="state pending">Pending</span></td></tr><tr><td>Body temperature</td><td id="tableBodyTemp">— °C</td><td>DS18B20 prototype</td><td><span class="state pending">Pending</span></td></tr><tr><td>Ambient temperature</td><td id="tableAmbient">— °C</td><td>DHT22</td><td><span class="state pending">Pending</span></td></tr><tr><td>Humidity</td><td id="tableHumidity">—%</td><td>DHT22</td><td><span class="state pending">Pending</span></td></tr><tr><td>Motion / orientation</td><td id="tableMotion">Awaiting API mapping</td><td>MPU6050</td><td><span class="state pending">Pending</span></td></tr>
+    </tbody></table></div></article></section>
+    <section class="page" id="page-twin"><div class="section-intro"><h1>Worker Digital Twin</h1><p class="muted">Virtual representation updated from measurements and the Python model.</p></div><div class="content-grid"><article class="panel twin-hero"><div class="twin-orb large">◎</div><p class="eyebrow">DIGITAL REPRESENTATION</p><h2>Worker Twin · 001</h2><p class="muted" id="twinHeroSync">Not yet synchronised to live hardware.</p><div class="twin-stats"><div><small>Observed HR</small><b id="twinHr">— BPM</b></div><div><small>Baseline Ref</small><b id="twinExpected">Awaiting model</b></div><div><small>Divergence</small><b id="twinDivergenceVal">Awaiting model</b></div></div></article><article class="panel"><h3>Twin state components</h3><div class="component-list"><p>Personal baseline <span class="state pending">Pending</span></p><p>Physiological state <span class="state pending">Pending</span></p><p>Environmental state <span class="state pending">Pending</span></p><p>Exposure / recovery <span class="state pending">Pending</span></p><p>Future state <span class="state pending">Pending</span></p></div></article></div></section>
+    <section class="page" id="page-predictions"><div class="section-intro"><h1>Predictions &amp; MADTP</h1><p class="muted">Live outputs from the Python Random Forest model and risk classifier.</p></div><div class="metric-grid three"><article class="metric-card">Current MADTP score<div class="metric-value"><span id="predScore">—</span> <small>/ 100</small></div><p class="metric-foot">Waiting for Python API</p></article><article class="metric-card">Deterioration risk<div class="metric-value"><span id="predRisk">—</span> <small>%</small></div><p class="metric-foot">Prediction not connected</p></article><article class="metric-card">Model status<div class="metric-value compact" id="predStatus">Not connected</div><p class="metric-foot">RF outputs pending</p></article></div><article class="panel"><h3>Prediction pipeline</h3><div class="pipeline"><span>ESP32 JSON</span> → <span>Preprocessing</span> → <span>Features &amp; fusion</span> → <span>RF Prediction</span> → <span>MADTP Risk</span></div></article></section>
+    <section class="page" id="page-simulation"><div class="section-intro"><h1>Simulation Lab</h1><p class="muted">Compare interventions using the existing Python what-if module.</p></div><article class="panel"><h3>Scenario comparison</h3><p class="muted">Illustrative placeholders only — not model-generated results.</p><div class="scenario-grid"><div class="scenario"><h3>↗ Continue work</h3><p class="muted">Maintain current exposure</p><b>Connect Python output</b></div><div class="scenario"><h3>Ⅱ Rest / cooling</h3><p class="muted">Reduce activity and heat load</p><b>Connect Python output</b></div><div class="scenario"><h3>＋ Hydration + cooling</h3><p class="muted">Simulate recovery intervention</p><b>Connect Python output</b></div></div></article></section>
+    <section class="page" id="page-settings"><div class="section-intro"><h1>Settings</h1><p class="muted">Frontend preferences and integration configuration.</p></div><article class="panel settings-panel"><h3>Connection configuration</h3><p class="muted">Standalone frontend. Set an API URL once the Python API endpoint is implemented.</p><label for="apiUrl">Python backend API URL</label><input id="apiUrl" placeholder="http://127.0.0.1:8000/api"><div class="settings-actions"><button id="saveSettings" class="btn primary">Save settings</button><span id="settingsMessage" class="muted"></span></div></article></section>
+    <footer class="footer">MADTP Prototype · Research interface · Not a medical diagnostic device</footer>
+  </main>
+</div><script src="app.js"></script>
+</body></html>

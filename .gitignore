@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.DS_Store
+data/live_madtp_serial_raw.csv
+data/live_madtp_results.csv
+data/live_hardware_raw.csv
+data/*.legacy*.csv
+data/personal_baseline.csv
+data/madtp_final_results.csv
+~$*
